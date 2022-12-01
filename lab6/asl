@@ -1,0 +1,23 @@
+#!/bin/bash
+# assemble and link, load
+# 220923 c.b.choi
+#
+# -h: help
+# -g: debug symbol
+
+if [ "$2" = "-h" ]; then
+   echo "asl: Assemble and link, load"
+elif [ -n $1 ]; then
+   if [ -z $2 ] || [ "$2" = "-g" ]; then
+      as $2 $1.s -o $1.o
+      ld $1.o -o $1
+   else
+      echo "usage: asl file [-g] [-h]"
+      echo "   -h: help"
+      echo "   -g: debug symbole"
+   fi
+else
+   echo "usage: asl file [-g] [-h]"
+   echo "   -h: help"
+   echo "   -g: debug symbole"
+fi

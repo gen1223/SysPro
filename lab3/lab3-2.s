@@ -1,0 +1,43 @@
+@ self-check the eos
+@ choi++20200918
+@ make function: puts(r0=ptr-to-str)
+@                do nothing if null string
+
+.text
+
+puts: @display string
+@   r0 = ptr to the string
+    mov r1, r0      @ r1 = ptr
+    @ check string size
+    mov r5, r1      @ copy ptr
+@    mov r2, #0      @ len
+p_lp:
+    ldrb r6, [r5]   @ *ptr
+    add r5, r5, #1  @ ptr++
+    cmp r6, #0      @ eos ?
+    bne p_lp        @ loop if no eos
+    @ got string size
+    sub r2, r5, r1  @ len
+@    sub r2, r2, #1  @ len--
+    subs r2, r2, #1  @ len-- !! suffix!!
+    beq p_ex
+    @ call sys_write
+    mov r7, #4      @ sys_wirte
+    mov r0, #1      @ r0 = stdout
+    swi 0
+p_ex: @ return
+    mov pc, lr
+
+_start: .global _start
+	adr r0, msg 	@ r0 = msg
+    bl puts
+exit: 	@ sys_exit(0)
+		@ r7 = 1 r0
+	mov r0, #0      @ exit code = 0
+	mov r7, #1
+	swi 0           @ sys_exit(0)
+	
+    .align
+msg: .asciz "Hello, World!\nHello, System Programming!!!\n"
+
+.end
