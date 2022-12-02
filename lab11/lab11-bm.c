@@ -22,14 +22,14 @@ int dis_subdir(const char *path) {
     printf("[%s]\n", path);
 
     // display sub-directories
-    while ((file = readdir(dp)) == NULL) {
+    while ((file = readdir(dp)) != NULL) {
         if (strcmp(file->d_name, ".") == 0 || strcmp(file->d_name, "..") == 0)
             continue;
         sprintf(filename, "%s/%s", path, file->d_name);
         if (stat(filename, &buf) == -1)
             continue;
         if (S_ISDIR(buf.st_mode))
-            dis_subdir(file->d_name);
+            dis_subdir(filename);
  //       else if (S_ISREG(buf.st_mode))
  //           printf("%s\n", file->d_name);
     }
