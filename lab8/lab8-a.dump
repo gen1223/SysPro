@@ -1,0 +1,21 @@
+
+lab8-a.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	e28f401c 	add	r4, pc, #28
+   4:	e5940000 	ldr	r0, [r4]
+   8:	e59f4018 	ldr	r4, [pc, #24]	; 28 <a+0x4>
+   c:	e0800004 	add	r0, r0, r4
+  10:	e59f4014 	ldr	r4, [pc, #20]	; 2c <a+0x8>
+  14:	e5843000 	str	r3, [r4]
+  18:	e3a07001 	mov	r7, #1
+  1c:	e3a00000 	mov	r0, #0
+  20:	ef000000 	svc	0x00000000
+
+00000024 <a>:
+  24:	000004d2 	.word	0x000004d2
+  28:	12345678 	.word	0x12345678
+  2c:	00000000 	.word	0x00000000
